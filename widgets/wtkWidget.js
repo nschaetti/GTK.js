@@ -1,5 +1,5 @@
 /*
- * wtkButton.js - WTK Button widget
+ * wtkWidget.js - WTK widget
  * 
  * Copyright 2017 Nils Schaetti <n.schaetti@gmail.com>
  * 
@@ -22,37 +22,29 @@
  */
 
 /**
- * WTK Button widget
+ * WTK Window widget
  */
-$.widget("custom.wtkButton", $.custom.wtkWidget, 
+$.widget("custom.wtkWidget", 
 {
-    // Options
-	options :
-	{
-        label: "Button"
-	},
-    
     // Constructor
     _create: function()
     {
-        // Call parent constructor
-        $.custom.wtkWidget.prototype._create.call(this);
-        
-        // Properties
-        this.options.elements = ($(this.element).data('label')) ? $(this.element).data('label') : this.options.label;
-        
-        // Init
-        this._init();
+        // Add the events
+        this._add_actions();
     },
     
     /***********************************
      * PRIVATE
      ***********************************/
-     
-    _init: function()
+    
+    // Window resized
+    _add_actions: function()
     {
-        var code = '<div class="wtkButtonOutside"><div class="wtkButtonInside">' + this.options.label + '</div></div>';
-        $(this.element).html(code);
+        // Resize
+        if(this.resize)
+        {
+            this.parent().resize($.proxy(this.resize, this));
+        }
     },
     
     /***********************************
@@ -63,11 +55,13 @@ $.widget("custom.wtkButton", $.custom.wtkWidget,
      * ACCESSORS
      ************************************/
     
+    // Get parent
+    parent: function()
+    {
+        if($(this).parent().length == 0)
+            return($(window));
+        else
+            return($(this).parent());
+    }
+    
 });
-
-// Create wtkWindow widgets
-$(document).ready(function()
-{
-    $(".wtkWidget[data-widget='wtkButton']").wtkButton();
-});
-

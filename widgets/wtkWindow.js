@@ -1,5 +1,5 @@
 /*
- * wtkButton.js - WTK Button widget
+ * wtkWindow.js - WTK Window widget
  * 
  * Copyright 2017 Nils Schaetti <n.schaetti@gmail.com>
  * 
@@ -22,42 +22,32 @@
  */
 
 /**
- * WTK Button widget
+ * WTK Window widget
  */
-$.widget("custom.wtkButton", $.custom.wtkWidget, 
+$.widget("custom.wtkWindow", $.custom.wtkWidget, 
 {
-    // Options
-	options :
-	{
-        label: "Button"
-	},
-    
     // Constructor
     _create: function()
     {
         // Call parent constructor
         $.custom.wtkWidget.prototype._create.call(this);
         
-        // Properties
-        this.options.elements = ($(this.element).data('label')) ? $(this.element).data('label') : this.options.label;
-        
-        // Init
-        this._init();
+        // Set title
+        document.title = $(this.element).data("title");
     },
     
     /***********************************
      * PRIVATE
      ***********************************/
-     
-    _init: function()
-    {
-        var code = '<div class="wtkButtonOutside"><div class="wtkButtonInside">' + this.options.label + '</div></div>';
-        $(this.element).html(code);
-    },
     
     /***********************************
      * EVENTS
      ***********************************/
+    
+    // Widget resized
+    resize: function()
+    {
+    },
     
     /************************************
      * ACCESSORS
@@ -68,6 +58,5 @@ $.widget("custom.wtkButton", $.custom.wtkWidget,
 // Create wtkWindow widgets
 $(document).ready(function()
 {
-    $(".wtkWidget[data-widget='wtkButton']").wtkButton();
+    $(".wtkWidget[data-widget='wtkWindow']").wtkWindow();
 });
-
